@@ -6,6 +6,7 @@
   </head>
   <body>
 
+    <h1>Earliest Program for Station</h1>
     <!-- Station selection -->
     <label for="station-selection"></label>
     <select id="station-select" name="station-selection">
@@ -14,13 +15,16 @@
       <option value="3">AAAA-TV</option>
       <option value="4">KKKK-TV</option>
     </select>
-    <button type="button" name="update" onclick="updateStation()">Update</button>
+    <button type="button" name="update" onclick="stationUpdator.updateStation()">Update</button>
 
+    <br>
+    
     <!-- Station information -->
     <div id="program-name"></div>
     <div id="flight-date"></div>
 
     <script type="text/javascript" src="programTable.js"></script>
+    <script type="text/javascript" src="StationUpdator.js"></script>
     <script type="text/javascript" src="frmProgram.js"></script>
   </body>
 </html>
