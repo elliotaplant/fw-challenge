@@ -1,0 +1,22 @@
+Option Compare Database
+Option Explicit
+
+Private Sub Toggle6_Click()
+
+End Sub
+
+Private Sub btnUpdate_Click()
+Dim CurDb As database, rsProgram As Recordset
+Dim CurStnId As Long
+
+Set CurForm = Me.Form
+sSql = "SELECT PROGRAM.PROGRAM_NAME, PROGRAM.FLIGHT_START_DATE"
+sSql = sSql + " FROM PROGRAM"
+sSql = sSql + " WHERE (((PROGRAM.STATION_ID)=" & CurStnId & "));"
+Set rsProgram = CurDb.OpenRecordset(sSql, dbOpenDynaset)
+rsProgram.MoveFirst
+CurForm![Program] = rsProgram![PROGRAM_NAME]
+CurForm![FlightDate] = Format$(rsProgram![FLIGHT_DATE], "m/d/yy")
+
+End Sub
+

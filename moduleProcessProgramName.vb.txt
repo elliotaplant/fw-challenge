@@ -1,0 +1,40 @@
+Option Compare Database   'Use database order for string comparisons
+Option Explicit
+
+Function ConvertSingleQuote(CurProgram As String) As String
+'Convert the apostrophe in SQL string
+
+Dim Pos As Integer, TempProgram As String, RetVal As String, MoreSingleQuote As Integer
+
+MoreSingleQuote = True
+TempProgram = CurProgram
+RetVal = "'"
+While (MoreSingleQuote)
+    Pos = InStr(TempProgram, "'")
+    If Pos = 0 Then
+        RetVal = RetVal & TempProgram
+    Else
+        RetVal = RetVal & Left$(TempProgram, Pos) & "''"
+        TempProgram = Right(TempProgram, Len(TempProgram) - Pos - 1)
+    End If
+Wend
+ConvertSingleQuote = RetVal
+End Function
+
+Function ProcessProgramName()
+Dim CurDb As database, rsProgram As Recordset
+Dim strOutput As String
+
+Set CurDb = DBEngine(0)(0)
+sSql = "SELECT PROGRAM.PROGRAM_NAME"
+sSql = "FROM PROGRAM"
+sSql = "ORDER BY PROGRAM_ID"
+Set reProgram = CurDb.OpenRecordset(sSql, dbOpenSnapshot)
+reProgram.MoveFirst
+Do
+    strOutput = ConvertSingleQuote(rsProgram![PROGRAM_NAME]) & ","
+Loop Until rsProgram.EOF
+MsgBox strOutput
+rsProgram.Close
+Set rsProgram = Nothing
+End Function
