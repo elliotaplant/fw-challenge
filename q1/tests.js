@@ -2,7 +2,6 @@ const {processProgramName, replaceAll, aphaSortNoApostrophes} = require('./proce
 const TestRunner = require('../TestRunner');
 
 // Basic console.assert tests for question 1
-
 const testRunner = new TestRunner();
 
 // replaceAll tests
@@ -38,7 +37,7 @@ testRunner.registerTest('processProgramName should work on a program name with m
   console.assert(processProgramName(["T'es't"]) === "'T''es''t'");
 });
 
-testRunner.registerTest('processProgramName should double each apostrophe even if is adjacent to another apostrophe', () => {
+testRunner.registerTest('processProgramName should double each apostrophe that is adjacent to another apostrophe', () => {
   console.assert(processProgramName(["Tes''t"]) === "'Tes''''t'");
 });
 
@@ -51,8 +50,12 @@ testRunner.registerTest('processProgramName should alphabetically sort multiple 
 });
 
 testRunner.registerTest('processProgramName should alphabetically sort multiple program names with apostrophes', () => {
-  console.log(`processProgramName(['Test1', 'Test3', "Test'2"])`,processProgramName(['Test1', 'Test3', "Test'2"]));
   console.assert(processProgramName(['Test1', 'Test3', "Test'2"]) === "'Test1','Test''2','Test3'");
 });
 
+testRunner.registerTest('processProgramName should alphabetically sort programs names with multiple apostrophes', () => {
+  console.assert(processProgramName(["T'est1", "'Test3'", "Test'2"]) === "'T''est1','Test''2','''Test3'''");
+});
+
+// Run registered tests for question 1
 testRunner.runTests();
