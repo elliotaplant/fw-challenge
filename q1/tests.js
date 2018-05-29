@@ -57,5 +57,23 @@ testRunner.registerTest('processProgramName should alphabetically sort programs 
   console.assert(processProgramName(["T'est1", "'Test3'", "Test'2"]) === "'T''est1','Test''2','''Test3'''");
 });
 
+testRunner.registerTest('processProgramName should process a generic list of program names', () => {
+  const names = [
+    "10 O''CLOCK NWS",
+    'ACCESS HOLLYWD',
+    'Jeop',
+    "C O''BRIEN-NBC''''Program",
+    "Frasier''s",
+    'Barney',
+    'Just Shoot me',
+    'Wheel',
+    'Sesame Street'
+  ];
+  const processedNames = "'10 O''''CLOCK NWS','ACCESS HOLLYWD','Barney','C O''''BRIEN-NBC''''''''Program'," +
+    "'Frasier''''s','Jeop','Just Shoot me','Sesame Street','Wheel'";
+
+  console.assert(processProgramName(names) === processedNames);
+});
+
 // Run registered tests for question 1
 testRunner.runTests();
