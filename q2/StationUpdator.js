@@ -6,6 +6,9 @@ class StationUpdator {
 
     // Also stores a sorted version of the program table as a lazy-computed cache
     this.sortedProgramTable = null;
+
+    // Constant date formatting to display date ("January 01, 2000")
+    this.DATE_FORMAT = { year: 'numeric', month: 'long', day: '2-digit' };
   }
 
   updateStation() {
@@ -18,7 +21,11 @@ class StationUpdator {
     if (earliestProgram) {
       // Set the UI to display the new earliest station
       this.setProgramName(earliestProgram.PROGRAM_NAME);
-      this.setFlightDate(earliestProgram.FLIGHT_DATE);
+
+      // Format the date before appending it to UI
+      const flightDate = new Date(earliestProgram.FLIGHT_DATE);
+      const formattedFlightDate = flightDate.toLocaleDateString('en-US', this.DATE_FORMAT);
+      this.setFlightDate(formattedFlightDate);
     } else {
       // We were unable to find the earliest program for this station, so display an error
       this.setProgramName('Unable to find earliest program');
